@@ -12,6 +12,7 @@ const box1ItemsOriginal = [
   "iPhone 12 a",
   "iPad a",
 ];
+
 const box2ItemsOriginal = [
   "iPad mini a",
   "Macbook a",
@@ -36,22 +37,21 @@ export default function Home({
 
   // Function to open a modal
   function openModal(index = 0) {
-    console.log('openModal index:',index);
     modalRef.current.style.display = "block";
     overlayRef.current.style.display = "block";
     // $(".num-wrap").text(index);
     setNumWrapText(index)
   }
 
-  let dailySpinCount = 5;
   function updateDailySpinCount() {
     const count1 = document.getElementById("daily-spin-count-1");
     const count2 = document.getElementById("daily-spin-count-2");
-    console.log('updateDailySpinCount dailySpinCount:',dailySpinCount);
     // $("#daily-spin-count-2").text(dailySpinCount);
-    setDailySpinCountState(dailySpinCount)
+    if(dailySpinCountState>=1){
+      setDailySpinCountState(prev=> prev-1)
+    }
     // count1.textContent = dailySpinCount;
-    count2.textContent = dailySpinCount;
+    // count2.textContent = dailySpinCount;
   }
 
   // Function to close a modal
@@ -61,14 +61,6 @@ export default function Home({
     modalRef.current.style.display = "none";
     overlayRef.current.style.display = "none";
   }
-
-  // /
-  //   // Add event listeners to open modals
-  // openModalBtns.forEach((btn, index) => {
-  //   btn.addEventListener("click", () => {
-  //     openModal(index);
-  //   });
-  // });
 
   function updateModalWinnings(winnings) {
     // $(".winning").text("You Won " + winnings);
@@ -154,9 +146,7 @@ export default function Home({
       //  applause.play();
       openModal(SelectedItem);
       updateModalWinnings(SelectedItem);
-      if (dailySpinCount > 0) {
-        dailySpinCount--;
-      }
+     
       updateDailySpinCount();
     }, 5500);
 
@@ -221,7 +211,6 @@ export default function Home({
                 0
               </div>
               <div className="count" id="daily-spin-count-2">
-                {/* 5 */}
                 {dailySpinCountState}
               </div>
             </div>
